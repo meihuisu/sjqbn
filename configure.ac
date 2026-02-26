@@ -60,21 +60,21 @@ dnl Verify configuration
 dnl
 
 ##check optional large data path
-##MSCAL_LARGEDATA_DIR=$CVM_LARGEDATA_DIR/model/mscal
+##SJQBN_LARGEDATA_DIR=$CVM_LARGEDATA_DIR/model/sjqbn
 if test x"$CVM_LARGEDATA_DIR" != x; then
    # test directory existence
-   MSCAL_LARGEDATA_DIR=$CVM_LARGEDATA_DIR/model/mscal
+   SJQBN_LARGEDATA_DIR=$CVM_LARGEDATA_DIR/model/sjqbn
 # In docker container building.. this is not accessible  yet ???
    if test x"$CVM_IN_DOCKER" != x; then
-     AM_CONDITIONAL([WITH_MSCAL_LARGEDATA_DIR], true)
-     AC_SUBST(MSCAL_LARGEDATA_DIR)
+     AM_CONDITIONAL([WITH_SJQBN_LARGEDATA_DIR], true)
+     AC_SUBST(SJQBN_LARGEDATA_DIR)
    else 
-     AC_CHECK_FILE([$MSCAL_LARGEDATA_DIR/model_updated_CenCal2.nc],
-                [AM_CONDITIONAL([WITH_MSCAL_LARGEDATA_DIR], true) AC_SUBST(MSCAL_LARGEDATA_DIR)],
-                [AM_CONDITIONAL([WITH_MSCAL_LARGEDATA_DIR], false)])
+     AC_CHECK_FILE([$SJQBN_LARGEDATA_DIR/model_updated_CenCal2.nc],
+                [AM_CONDITIONAL([WITH_SJQBN_LARGEDATA_DIR], true) AC_SUBST(SJQBN_LARGEDATA_DIR)],
+                [AM_CONDITIONAL([WITH_SJQBN_LARGEDATA_DIR], false)])
    fi
 else
-   AM_CONDITIONAL(WITH_MSCAL_LARGEDATA_DIR, false)
+   AM_CONDITIONAL(WITH_SJQBN_LARGEDATA_DIR, false)
 fi
 
 AC_SUBST(CFLAGS)
