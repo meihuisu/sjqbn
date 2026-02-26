@@ -1,0 +1,14 @@
+
+cc -fPIC -DDYNAMIC_LIBRARY -g -O2 -I$UCVM_INSTALL_PATH/model/sjqbn/include  -o cJSON.o -c cJSON.c 
+cc -fPIC -g -c um_netcdf.c -o um_netcdf.o -I$UCVM_INSTALL_PATH/lib/hdf5/include -I$UCVM_INSTALL_PATH/lib/netcdf/include 
+
+cc -fPIC -g -c sjqbn_query.c -o sjqbn_query.o -I$UCVM_INSTALL_PATH/lib/hdf5/include -I$UCVM_INSTALL_PATH/lib/netcdf/include 
+
+cc -fPIC -g -c sjqbn.c -o sjqbn.o -I$UCVM_INSTALL_PATH/lib/hdf5/include -I$UCVM_INSTALL_PATH/lib/netcdf/include 
+cc -fPIC -g -c sjqbn_util.c -o sjqbn_util.o -I$UCVM_INSTALL_PATH/lib/hdf5/include -I$UCVM_INSTALL_PATH/lib/netcdf/include 
+
+ar rcs libsjqbn.a sjqbn.o cJSON.o sjqbn_util.o um_netcdf.o
+
+cc sjqbn_query.o -o sjqbn_query libsjqbn.a -I$UCVM_INSTALL_PATH/lib/hdf5/include -I$UCVM_INSTALL_PATH/lib/netcdf/include -L$UCVM_INSTALL_PATH/lib/hdf5/lib -lhdf5 -L$UCVM_INSTALL_PATH/lib/netcdf/lib -lnetcdf -lm
+
+
