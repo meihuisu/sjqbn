@@ -118,9 +118,10 @@ float _interp_a_point(sjqbn_dataset_t *dataset, float *buffer, sjqbn_pt_info_t *
     float lat_percent=pt->lat_percent;
     float dep_percent=pt->dep_percent;
 
-    if(pt->lon_idx < 0 || pt->lat_idx < 0 || pt->dep_idx < 0) {
+    if(pt->lon_idx < 0 || pt->lat_idx < 0 || pt->dep_idx < 0 ||
+         pt->lon_idx +1 >= dataset->nx || pt->lat_idx +1 >= dataset->ny || pt->dep_idx+1 >= dataset->nz ) {
         // out of bound
-        return -1;	
+        return -1;
     }
 
     float val0= buffer[_buffer_offset(dataset,lon_idx,lat_idx,dep_idx)];      // x,    y, z
@@ -132,13 +133,13 @@ float _interp_a_point(sjqbn_dataset_t *dataset, float *buffer, sjqbn_pt_info_t *
     float val6= buffer[_buffer_offset(dataset,lon_idx,lat_idx+1,dep_idx+1)];  // x,  y+1, z+1
     float val7= buffer[_buffer_offset(dataset,lon_idx+1,lat_idx+1,dep_idx+1)];// x+1,y+1, z+1
         
-    float val00= val0 * (1-lat_percent) + val1 * lat_percent;    
-    float val11= val4 * (1-lat_percent) + val5 * lat_percent;    
-    float val22= val2 * (1-lat_percent) + val3 * lat_percent;    
-    float val33= val6 * (1-lat_percent) + val7 * lat_percent;    
+    float val00= val0 * (1-lon_percent) + val1 * lon_percent;    
+    float val11= val4 * (1-lon_percent) + val5 * lon_percent;    
+    float val22= val2 * (1-lon_percent) + val3 * lon_percent;    
+    float val33= val6 * (1-lon_percent) + val7 * lon_percent;    
 
-    float val000 = val00 * (1-lon_percent) + val22 * lon_percent;
-    float val111 = val11 * (1-lon_percent) + val33 * lon_percent;
+    float val000 = val00 * (1-lat_percent) + val22 * lat_percent;
+    float val111 = val11 * (1-lat_percent) + val33 * lat_percent;
 
     float val0000 = val000 * (1-dep_percent) + val111 * dep_percent;
     return val0000;
