@@ -94,10 +94,10 @@ def main():
 
     fname="model_SJQ_dll0.01.nc" 
     targetfname=mdir+"/"+fname
-    tarfile="./model_SJQ_dll0.01.nc.tar.gz"
+    tarfile="model_SJQ_dll0.01.nc.tar.gz"
     if not os.path.isfile(targetfname) :
       print("download ", tarfile)
-      url = path + "/" + tarfile 
+      url = path + "/" + mdir + "/" + tarfile 
       download_urlfile(url,tarfile)
       subprocess.check_call(["tar", "-zxvf", tarfile])
       subprocess.check_call(["mv", fname, mdir])
